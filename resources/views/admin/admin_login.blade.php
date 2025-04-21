@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+ 
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -9,16 +9,18 @@
 	<meta name="author" content="NobleUI">
 	<meta name="keywords" content="nobleui, bootstrap, bootstrap 5, bootstrap5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
-	<title>Admin Login</title>
+	<title>Admin Login Page </title>
 
-  <style type="text/css">
-    .authlogin-side-wrapper{
-      width: 100%;
-      height: 100%;
-      background-image: url({{ asset('upload/login.png' ) }});
-    }
+	<style type="text/css">
+			
+			.authlogin-side-wrapper{
+				width: 100%;
+				height: 100%;
+				background-image: url({{ asset('upload/login.png')  }});
+			}
 
-  </style>
+
+	</style>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,7 +37,7 @@
 
 	<!-- inject:css -->
 	<link rel="stylesheet" href="{{ asset('backend/assets/fonts/feather-font/css/iconfont.css') }}">
-	<link rel="stylesheet" href="{{ asset('backend/assets/vendors/flag-icon-css/css/flag-icon.min.css"') }}">
+	<link rel="stylesheet" href="{{ asset('backend/assets/vendors/flag-icon-css/css/flag-icon.min.css') }}">
 	<!-- endinject -->
 
   <!-- Layout styles -->  
@@ -43,6 +45,12 @@
   <!-- End layout styles -->
 
   <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.png') }}" />
+
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
+ 
+
+
+
 </head>
 <body>
 	<div class="main-wrapper">
@@ -60,14 +68,18 @@
                 </div>
                 <div class="col-md-8 ps-md-0">
                   <div class="auth-form-wrapper px-4 py-5">
-                    <a href="#" class="noble-ui-logo logo-light d-block mb-2">Waz<span>Tech</span></a>
+                    <a href="#" class="noble-ui-logo logo-light d-block mb-2">Easy<span>Learning </span></a>
                     <h5 class="text-muted fw-normal mb-4">Welcome back! Log in to your account.</h5>
-                    <form class="forms-sample" method="POST" action="{{ route('login') }} ">
-                      @csrf
+                   
+
+     <form class="forms-sample" method="post" action="{{ route('login') }}">
+       @csrf
+
                       <div class="mb-3">
-                        <label for="login" class="form-label">Email/Name/Phone</label>
-                        <input type="text" class="form-control" name="login" id="login" placeholder="Email">
+  <label for="login" class="form-label">Email/Name/Phone </label>
+                        <input type="text" name="login" class="form-control" id="login" placeholder="Email">
                       </div>
+
                       <div class="mb-3">
                         <label for="userPassword" class="form-label">Password</label>
                         <input type="password" class="form-control" id="password" name="password" autocomplete="current-password" placeholder="Password">
@@ -79,13 +91,16 @@
                         </label>
                       </div>
                       <div>
-                        
-                        <button type="submit" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
-                          Login
+                      
+                 <button type="submit" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
+                         	Login
+                          
                         </button>
                       </div>
                       <a href="register.html" class="d-block mt-3 text-muted">Not a user? Sign up</a>
                     </form>
+
+
                   </div>
                 </div>
               </div>
@@ -111,6 +126,31 @@
 
 	<!-- Custom js for this page -->
 	<!-- End custom js for this page -->
+
+	  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script>
+ @if(Session::has('message'))
+ var type = "{{ Session::get('alert-type','info') }}"
+ switch(type){
+    case 'info':
+    toastr.info(" {{ Session::get('message') }} ");
+    break;
+
+    case 'success':
+    toastr.success(" {{ Session::get('message') }} ");
+    break;
+
+    case 'warning':
+    toastr.warning(" {{ Session::get('message') }} ");
+    break;
+
+    case 'error':
+    toastr.error(" {{ Session::get('message') }} ");
+    break; 
+ }
+ @endif 
+</script>
 
 </body>
 </html>

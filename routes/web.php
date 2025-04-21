@@ -5,6 +5,19 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Backend\PropertyTypeController;
+use App\Http\Controllers\Backend\PropertyController;
+use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Controllers\Backend\StateController;
+use App\Http\Controllers\Backend\TestimonialController;
+use App\Http\Controllers\Backend\BlogController;
+use App\Http\Controllers\Backend\SettingController;
+use App\Http\Controllers\Backend\RoleController;
+ 
+use App\Http\Controllers\Agent\AgentPropertyController;
+use App\Http\Controllers\Frontend\IndexController;
+use App\Http\Controllers\Frontend\WishlistController;
+use App\Http\Controllers\Frontend\CompareController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -18,9 +31,19 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/user/profile', [UserController::class, 'UserProfile'])->name('user.profile');
+    Route::post('/user/profile', [UserController::class, 'UserProfileUpdate'])->name('user.profile.update');
+
+    Route::get('/user/logout', [UserController::class, 'UserLogout'])->name('user.logout');
+
+    Route::get('/user/change/password', [UserController::class, 'UserChangePassword'])->name('user.change.password');
+
+    Route::post('/user/password/update', [UserController::class, 'UserPasswordUpdate'])->name('user.password.update');
+
+    Route::get('/user/schedule/request', [UserController::class, 'UserScheduleRequest'])->name('user.schedule.request'); 
+    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';
@@ -51,3 +74,15 @@ Route::middleware(['auth','role:agent'])->group(function(){
 });
 
 Route::get('/admin/login', [AdminController::class, 'AdminLogin'])->name('admin.login');
+
+//AdminGroup Middleware
+Route::middleware(['auth','role:admin'])->group(function(){
+
+    
+//Property Type ALl Route
+    Route::controller(PropertyTypeController::class)->group(function(){
+        Route::get('/all/type', 'Alltype')->name('all.type');
+
+    });
+   
+});
